@@ -53,19 +53,43 @@ require 'display_logic.php';
         </select>
     </label>
     <br/>
-    <input type='checkbox' id='harrisBenedict' name='harrisBenedict' value='harrisBenedict'>
+    <input type='checkbox' id='harrisBenedict' name='harrisBenedict' value='yes'>
     <label for='harrisBenedict'>Show results for Harris-Benedict Equation</label>
     <br/>
-    <input type='checkbox' id='compareCalories' name='compareCalories' value='compareCalories'>
+    <input type='checkbox' id='compareCalories' name='compareCalories' value='yes'>
     <label for='compareCalories'>Show how activity impacts calories burned</label>
     </br>
     <input type='submit' id='calculate' value='Calculate'>
 </form>
 <div>
     <h2>Output</h2>
-    <?php if (isset($bmrMiffin)): ?>
-        <?= 'BMR' . $bmrMiffin; ?>
-    <?php endif; ?>
+    <div>
+        <?php if (isset($bmrMiffin)): ?>
+            <?= 'BMR: ' . $bmrMiffin; ?>
+        <?php endif; ?>
+    </div>
+    <div>
+        <?php if (isset($caloriesBurnedMiffin)): ?>
+            <?= 'Calories Burned: ' . $caloriesBurnedMiffin; ?>
+        <?php endif; ?>
+    </div>
+    <div>
+        <?php if (isset($calculateBmrHarris) && $calculateBmrHarris == 'yes' ): ?>
+            <?= 'BMR (Harris): ' . $bmrHarris; ?>
+        <?php endif; ?>
+    </div>
+    <div>
+        <?php if (isset($compareCaloriesBurned) && $compareCaloriesBurned == 'yes'): ?>
+            <ul>
+                <?php foreach ($caloriesForActivitiesMiffin as $key => $caloriesForActivityMiffin): ?>
+                    <li>
+                        <?= $key . ' --> ' . $caloriesForActivitiesMiffin[$key]; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
+
 </div>
 
 </body>
