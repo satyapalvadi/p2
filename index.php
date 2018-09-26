@@ -14,7 +14,7 @@ require 'display_logic.php';
     <meta charset='utf-8'>
 </head>
 <body>
-<div class='container' style='border: 5px black solid; padding: 10px 0 10px 0;'>
+<div class='container container-style'>
     <!-- title -->
     <div class='col text-center'>
         <h1>Calories Burned Estimator</h1>
@@ -131,7 +131,7 @@ require 'display_logic.php';
 
         <!-- Checkbox to calculate using an alternate equation -->
         <div class='form-group row align-middle'>
-            <div class='col-sm-5 no-right-gutter' style='display: flex; align-items: center; justify-content: flex-end;'>
+            <div class='col-sm-5 no-right-gutter checkbox'>
                 <input type='checkbox'
                        id='harrisBenedict'
                        name='harrisBenedict'
@@ -144,7 +144,7 @@ require 'display_logic.php';
 
         <!-- Checkbox to compare calories based on different activity levels -->
         <div class='form-group row align-middle'>
-            <div class='col-sm-5 no-right-gutter' style='display: flex; align-items: center; justify-content: flex-end'>
+            <div class='col-sm-5 no-right-gutter checkbox'>
                 <input type='checkbox'
                        id='compareCalories'
                        name='compareCalories'
@@ -168,6 +168,8 @@ require 'display_logic.php';
                 <h2>Your Results</h2>
             </div>
         </div>
+
+        <!-- Displays BMR if it is set in the results -->
         <div class='row output-row'>
             <div class='col text-left'>
                 <?php if (isset($bmrMiffin)): ?>
@@ -176,6 +178,8 @@ require 'display_logic.php';
                         <?php endif; ?>
             </div>
         </div>
+
+        <!-- Displays calories burned if it is set in the results-->
         <div class='row output-row'>
             <div class='col text-left'>
                 <?php if (isset($caloriesBurnedMiffin)): ?>
@@ -184,6 +188,8 @@ require 'display_logic.php';
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- Displays BMR calculated as per Harris-Benedict equation if the user selected the checkbox and if the value is set in results -->
         <div class='row output-row'>
             <div class='col text-left'>
                 <?php if (isset($calculateBmrHarris) && $calculateBmrHarris == 'yes'): ?>
@@ -192,6 +198,8 @@ require 'display_logic.php';
                 <?php endif; ?>
             </div>
         </div>
+
+        <!-- Displays a table if the user selected the checkbox to compare and if the value array is set in results -->
         <div class='row justify-content-left table-row'>
             <?php if (isset($compareCaloriesBurned) && $compareCaloriesBurned == 'yes'): ?>
                 <table class="table table-bordered">
