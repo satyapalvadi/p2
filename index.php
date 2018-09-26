@@ -3,7 +3,7 @@ require 'display_logic.php';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang='en-US'>
 <head>
     <title>P2 - Calories Burned Calculator</title>
     <link rel="stylesheet"
@@ -14,7 +14,7 @@ require 'display_logic.php';
     <meta charset='utf-8'>
 </head>
 <body>
-<div class='container' style='border: 5px black solid'>
+<div class='container' style='border: 5px black solid; padding: 10px 0 10px 0;'>
     <div class='col text-center'>
         <h1>Calories Burned Calculator</h1>
     </div>
@@ -96,48 +96,53 @@ require 'display_logic.php';
     </form>
 </div>
 
-<div class='container'>
-    <div class='col text-center'>
-        <?php if (isset($results)): ?>
-            <h2>Your Results</h2>
-        <?php endif; ?>
+
+<?php if (isset($results)): ?>
+    <div class='container'>
+        <div class='row'>
+            <div class='col text-center'>
+                <h2>Your Results</h2>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col text-center' style='font-size: 20px'>
+                <?php if (isset($bmrMiffin)): ?>
+                    <span>Basal Metabolic Rate (BMR): </span> <span><?= $bmrMiffin ?><span> <span> calories/day</span>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class='col text-center' style='font-size: 20px'>
+            <?php if (isset($caloriesBurnedMiffin)): ?>
+                <?= 'Calories burned based on your activity level: ' . $caloriesBurnedMiffin . ' calories/day' ?>
+            <?php endif; ?>
+        </div>
+        <div class='col text-center' style='font-size: 20px'>
+            <?php if (isset($calculateBmrHarris) && $calculateBmrHarris == 'yes'): ?>
+                <?= 'BMR (Harris-Benedict equation): ' . $bmrHarris . ' calories/day'; ?>
+            <?php endif; ?>
+        </div>
+        <div class='row justify-content-center'>
+            <?php if (isset($compareCaloriesBurned) && $compareCaloriesBurned == 'yes'): ?>
+                <table class="table table-bordered" style='width:80%'>
+                    <thead>
+                    <tr>
+                        <th scope='col'>Activity Level</th>
+                        <?php foreach ($caloriesForActivitiesMiffin as $key => $caloriesForActivityMiffin): ?>
+                            <th scope='col'><?= $key ?></th>
+                        <?php endforeach; ?>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <th scope='col'>Calories burned/day</th>
+                        <?php foreach ($caloriesForActivitiesMiffin as $key => $caloriesForActivityMiffin): ?>
+                            <td scope='col'><?= $caloriesForActivitiesMiffin[$key] ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                </table>
+            <?php endif; ?>
+        </div>
     </div>
-    <div class='col text-center' style='font-size: 20px'>
-        <?php if (isset($bmrMiffin)): ?>
-            <?= 'Basal Metabolic Rate (BMR): ' . $bmrMiffin . ' calories/day'; ?>
-        <?php endif; ?>
-    </div>
-    <div class='col text-center' style='font-size: 20px'>
-        <?php if (isset($caloriesBurnedMiffin)): ?>
-            <?= 'Calories burned based on your activity level: ' . $caloriesBurnedMiffin . ' calories/day' ?>
-        <?php endif; ?>
-    </div>
-    <div class='col text-center' style='font-size: 20px'>
-        <?php if (isset($calculateBmrHarris) && $calculateBmrHarris == 'yes'): ?>
-            <?= 'BMR (Harris-Benedict equation): ' . $bmrHarris . ' calories/day'; ?>
-        <?php endif; ?>
-    </div>
-    <div class='row justify-content-center'>
-        <?php if (isset($compareCaloriesBurned) && $compareCaloriesBurned == 'yes'): ?>
-            <table class="table table-bordered" style='width:80%'>
-                <thead>
-                <tr>
-                    <th scope='col'>Activity Level</th>
-                    <?php foreach ($caloriesForActivitiesMiffin as $key => $caloriesForActivityMiffin): ?>
-                        <th scope='col'><?= $key ?></th>
-                    <?php endforeach; ?>
-                </tr>
-                </thead>
-                <tr>
-                    <th scope='col'>Calories burned/day</th>
-                    <?php foreach ($caloriesForActivitiesMiffin as $key => $caloriesForActivityMiffin): ?>
-                        <td scope='col'><?= $caloriesForActivitiesMiffin[$key] ?></td>
-                    <?php endforeach; ?>
-                </tr>
-            </table>
-        <?php endif; ?>
-    </div>
-</div>
+<?php endif; ?>
 
 </body>
 </html>

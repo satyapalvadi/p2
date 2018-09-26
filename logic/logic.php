@@ -20,17 +20,17 @@ $compareCaloriesBurned = isset($_GET['compareCalories']) ? $_GET['compareCalorie
 $height = $heightRadio == 'inches' ? convertToCms($height) : $height;
 $weight = $weightRadio == 'lbs' ? convertToKgs($weight) : $weight;
 
-# Calculate BMR
+# Calculate BMR based on Miffin St.Jeor equation
 $bmrMiffin = round(calculateBmrMiffin($age, $gender, $height, $weight), 0, PHP_ROUND_HALF_UP);
 
-# Load activity multipliers
+# Load activity multipliers from a data file
 $activityMultipliersJson = file_get_contents('../data/activityMultipliers.json');
 $activityMultipliers = json_decode($activityMultipliersJson, true);
 
-# Calculate calories burned based on activity
+# Calculate calories burned/day based on activity and round the value
 $caloriesBurnedMiffin = round($bmrMiffin * $activityMultipliers[$activity], 0, PHP_ROUND_HALF_UP);
 
-# Calculate BMR based on Harris-Benedict formula
+# Calculate BMR based on Harris-Benedict formula and round the value
 if($calculateBmrHarris == 'yes') {
     $bmrHarris = round(calculateBmrHarris($age, $gender, $height, $weight), 0, PHP_ROUND_HALF_UP);
 }
