@@ -28,7 +28,7 @@ $activityMultipliersJson = file_get_contents('../data/activityMultipliers.json')
 $activityMultipliers = json_decode($activityMultipliersJson, true);
 
 # Calculate calories burned based on activity
-$caloriesBurnedMiffin = $bmrMiffin * $activityMultipliers[$activity];
+$caloriesBurnedMiffin = round($bmrMiffin * $activityMultipliers[$activity], 0, PHP_ROUND_HALF_UP);
 
 # Calculate BMR based on Harris-Benedict formula
 if($calculateBmrHarris == 'yes') {
@@ -37,7 +37,7 @@ if($calculateBmrHarris == 'yes') {
 
 if($compareCaloriesBurned == 'yes') {
     foreach($activityMultipliers as $activityKey => $activityMultiplier){
-        $caloriesForActivitiesMiffin[$activityKey] = $activityMultipliers[$activityKey] * $caloriesBurnedMiffin;
+        $caloriesForActivitiesMiffin[ucwords(str_replace('_', ' ', $activityKey))] = round(($activityMultipliers[$activityKey] * $bmrMiffin), 0, PHP_ROUND_HALF_UP) ;
     }
 }
 
