@@ -1,9 +1,8 @@
 <?php
 require '../includes/helpers.php';
 require 'bmrCalculators.php';
-session_start();
 
-dump($_GET);
+session_start();
 
 # Variables to hold user inputs
 $age = $_GET['age'];
@@ -23,35 +22,45 @@ $weight = $weightRadio == 'lbs' ? convertToKgs($weight) : $weight;
 # Calculate BMR based on Miffin St.Jeor equation
 $bmrMiffin = round(calculateBmrMiffin($age, $gender, $height, $weight), 0, PHP_ROUND_HALF_UP);
 
-# Load activity multipliers from a data file
+# Load activity multipliers from the data file
 $activityMultipliersJson = file_get_contents('../data/activityMultipliers.json');
 $activityMultipliers = json_decode($activityMultipliersJson, true);
 
-# Calculate calories burned/day based on activity and round the value
+# Calculate calories burned/day based on activity levels and round the value
 $caloriesBurnedMiffin = round($bmrMiffin * $activityMultipliers[$activity], 0, PHP_ROUND_HALF_UP);
 
-# Calculate BMR based on Harris-Benedict formula and round the value
-if($calculateBmrHarris == 'yes') {
+# Calculate BMR based on Harris-Benedict equation and round the value
+if ($calculateBmrHarris == 'yes') {
     $bmrHarris = round(calculateBmrHarris($age, $gender, $height, $weight), 0, PHP_ROUND_HALF_UP);
 }
 
-if($compareCaloriesBurned == 'yes') {
-    foreach($activityMultipliers as $activityKey => $activityMultiplier){
-        $caloriesForActivitiesMiffin[ucwords(str_replace('_', ' ', $activityKey))] = round(($activityMultipliers[$activityKey] * $bmrMiffin), 0, PHP_ROUND_HALF_UP) ;
+# Calculate calories burned based on different activity levels
+if ($compareCaloriesBurned == 'yes') {
+    foreach ($activityMultipliers as $activityKey => $activityMultiplier) {
+        $caloriesForActivitiesMiffin[$activityKey] = round(($activityMultipliers[$activityKey] * $bmrMiffin), 0, PHP_ROUND_HALF_UP);
     }
 }
 
+# Save the results to $_SESSION global var
 $_SESSION['results'] = [
     'bmrMiffin' => $bmrMiffin,
     'caloriesBurnedMiffin' => $caloriesBurnedMiffin,
-    'calculateBmrHarris' =>  $calculateBmrHarris,
+    'calculateBmrHarris' => $calculateBmrHarris,
     'bmrHarris' => $bmrHarris,
     'compareCaloriesBurned' => $compareCaloriesBurned,
-    'caloriesForActivitiesMiffin' => $caloriesForActivitiesMiffin
+    'caloriesForActivitiesMiffin' => $caloriesForActivitiesMiffin,
+    'inputAge' => $age,
+    'inputHeight' => $_GET['heightValue'],
+    'inputHeightRadio' => $heightRadio,
+    'inputWeight' => $_GET['weightValue'],
+    'inputWeightRadio' => $weightRadio,
+    'inputGender' => $gender,
+    'inputActivity' => $activity,
+    'selectedBmrHarris' => $calculateBmrHarris,
+    'selectedCompareCalories' => $compareCaloriesBurned
 ];
 
-echo dump($_SESSION['results']);
-
+# Redirect the user to index.php
 header('Location: ../index.php');
 
 

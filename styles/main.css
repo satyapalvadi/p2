@@ -1,4 +1,29 @@
-.valign-row {
-    display: flex;
-    align-items: center
+.no-right-gutter {
+    padding: 0 !important;
+}
+
+.output-title {
+    padding: 20px 0 10px 0;
+}
+
+.output-row {
+    font-size: 1.4em;
+    padding: 5px 0 5px 0;
+}
+
+.table-row {
+    padding: 20px 0 5px 0;
+}
+
+.table {
+    width: 100%;
+    font-size: 1.2em;
+}
+
+.table-caption {
+    text-align: center;
+}
+
+.matched-activity-table-cell {
+    font-weight: bold;
 }
