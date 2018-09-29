@@ -1,58 +1,52 @@
 <?php
 require '../includes/helpers.php';
-require 'bmrCalculators.php';
+require '../includes/calculatorHelpers.php';
+require 'Person.php';
+require 'Form.php';
+
+use BMR\Person;
+use BMR\Form;
 
 session_start();
 
-# Variables to hold user inputs
-$age = $_GET['age'];
-$height = $_GET['heightValue'];
-$heightRadio = $_GET['heightRadio'];
-$weight = $_GET['weightValue'];
-$weightRadio = $_GET['weightRadio'];
-$gender = $_GET['gender'];
-$activity = $_GET['activity'];
-$calculateBmrHarris = isset($_GET['harrisBenedict']) ? $_GET['harrisBenedict'] : 'no';
-$compareCaloriesBurned = isset($_GET['compareCalories']) ? $_GET['compareCalories'] : 'no';
+# Instantiate the Form class
+$form = new Form($_GET);
+
+# Retrieve input field values using form class methods.
+$age = $form->get('age');
+$gender = $form->get('gender');
+$heightValue = $form->get('heightValue');
+$weightValue = $form->get('weightValue');
+$heightRadio = $form->get('heightRadio');
+$weightRadio = $form->get('weightRadio');
+$activity = $form->get('activity');
+$calculateBmrHarris = $form->has('harrisBenedict') ? $form->get('harrisBenedict') : 'no';
+$compareCaloriesBurned = $form->has('compareCalories') ? $form->get('compareCalories') : 'no';
+
+# Validation methods
+$errors = $form->validate(
+    ['age' => 'required|digit',
+    'heightValue' => 'required|digit',
+    'weightValue' => 'required|digit'
+        //'weight' => 'required|digit',
+        //'height' => 'required|digit'
+    ]
+);
+
+echo dump($errors);
 
 # Height and weight converters
-$height = $heightRadio == 'inches' ? convertToCms($height) : $height;
-$weight = $weightRadio == 'lbs' ? convertToKgs($weight) : $weight;
+$height = $heightRadio == 'inches' ? convertToCms($heightValue) : $heightValue;
+$weight = $weightRadio == 'lbs' ? convertToKgs($weightValue) : $weightValue;
 
-# Calculate BMR based on Miffin St.Jeor equation
-$bmrMiffin = round(calculateBmrMiffin($age, $gender, $height, $weight), 0, PHP_ROUND_HALF_UP);
-
-# Load activity multipliers from the data file
-$activityMultipliersJson = file_get_contents('../data/activityMultipliers.json');
-$activityMultipliers = json_decode($activityMultipliersJson, true);
-
-# Calculate calories burned/day based on activity levels and round the value
-$caloriesBurnedMiffin = round($bmrMiffin * $activityMultipliers[$activity], 0, PHP_ROUND_HALF_UP);
-
-# Calculate BMR based on Harris-Benedict equation and round the value
-if ($calculateBmrHarris == 'yes') {
-    $bmrHarris = round(calculateBmrHarris($age, $gender, $height, $weight), 0, PHP_ROUND_HALF_UP);
-}
-
-# Calculate calories burned based on different activity levels
-if ($compareCaloriesBurned == 'yes') {
-    foreach ($activityMultipliers as $activityKey => $activityMultiplier) {
-        $caloriesForActivitiesMiffin[$activityKey] = round(($activityMultipliers[$activityKey] * $bmrMiffin), 0, PHP_ROUND_HALF_UP);
-    }
-}
-
-# Save the results to $_SESSION global var
+# Lets start populating the session super variable with what we know - inputs & form validation errors.
 $_SESSION['results'] = [
-    'bmrMiffin' => $bmrMiffin,
-    'caloriesBurnedMiffin' => $caloriesBurnedMiffin,
-    'calculateBmrHarris' => $calculateBmrHarris,
-    'bmrHarris' => $bmrHarris,
-    'compareCaloriesBurned' => $compareCaloriesBurned,
-    'caloriesForActivitiesMiffin' => $caloriesForActivitiesMiffin,
+    'errors' => $errors,
+    'hasErrors' => $form->hasErrors,
     'inputAge' => $age,
-    'inputHeight' => $_GET['heightValue'],
+    'inputHeight' => $heightValue,
     'inputHeightRadio' => $heightRadio,
-    'inputWeight' => $_GET['weightValue'],
+    'inputWeight' => $weightValue,
     'inputWeightRadio' => $weightRadio,
     'inputGender' => $gender,
     'inputActivity' => $activity,
@@ -60,6 +54,37 @@ $_SESSION['results'] = [
     'selectedCompareCalories' => $compareCaloriesBurned
 ];
 
+echo dump($_SESSION);
+
+if (!$form->hasErrors) {
+    # instantiate the Person class
+    $person = new Person($age, $height, $weight, $gender, $activity);
+
+    # Calculate BMR based on Miffin St.Jeor equation
+    $bmrMiffin = $person->calculateBMRMiffin();
+
+    # Calculate calories burned/day based on activity levels and round the value
+    $caloriesBurnedMiffin = $person->caloriesBurnedMiffin();
+
+    # Calculate BMR based on Harris-Benedict equation and round the value
+    if ($calculateBmrHarris == 'yes') {
+        $bmrHarris = $person->calculateBMRHarris();
+    }
+
+    # Calculate calories burned based on different activity levels
+    if ($compareCaloriesBurned == 'yes') {
+        $caloriesForActivitiesMiffin = $person->compareCaloriesBurned();
+    }
+
+    # add the calculated results to the $_SESSION global var
+    $_SESSION['results']['bmrMiffin'] = $bmrMiffin;
+    $_SESSION['results']['caloriesBurnedMiffin'] = $caloriesBurnedMiffin;
+    $_SESSION['results']['bmrHarris'] = $bmrHarris;
+    $_SESSION['results']['caloriesForActivitiesMiffin'] = $caloriesForActivitiesMiffin;
+
+    echo dump($_SESSION);
+   // die();
+}
 # Redirect the user to index.php
 header('Location: ../index.php');
 

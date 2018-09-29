@@ -4,25 +4,30 @@ session_start();
 # Dump various values from session into individual variables for index.php to process easily
 if (isset($_SESSION['results'])) {
     $results = $_SESSION['results'];
-    $bmrMiffin = $results['bmrMiffin'];
-    $caloriesBurnedMiffin = $results['caloriesBurnedMiffin'];
-    $calculateBmrHarris = $results['calculateBmrHarris'];
-    if ($calculateBmrHarris == 'yes') {
-        $bmrHarris = $results['bmrHarris'];
-    }
-    $compareCaloriesBurned = $results['compareCaloriesBurned'];
-    if ($compareCaloriesBurned == 'yes') {
-        $caloriesForActivitiesMiffin = $results['caloriesForActivitiesMiffin'];
-    }
+
+    $errors = $results['errors'];
+    $hasErrors = $results['hasErrors'];
+
     $inputAge = $results['inputAge'];
     $inputGender = $results['inputGender'];
     $inputWeight = $results['inputWeight'];
     $inputHeight = $results['inputHeight'];
     $inputWeightRadio = $results['inputWeightRadio'];
     $inputHeightRadio = $results['inputHeightRadio'];
+    $inputActivity = $results['inputActivity'];
     $selectedCompareCalories = $results['selectedCompareCalories'];
     $selectedBmrHarris = $results['selectedBmrHarris'];
-    $inputActivity = $results['inputActivity'];
+
+    if(!$hasErrors) {
+        $bmrMiffin = $results['bmrMiffin'];
+        $caloriesBurnedMiffin = $results['caloriesBurnedMiffin'];
+        if ($selectedBmrHarris == 'yes') {
+            $bmrHarris = $results['bmrHarris'];
+        }
+        if ($selectedCompareCalories == 'yes') {
+            $caloriesForActivitiesMiffin = $results['caloriesForActivitiesMiffin'];
+        }
+    }
 }
 
 session_unset();

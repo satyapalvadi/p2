@@ -160,8 +160,19 @@ require 'display_logic.php';
     </form>
 </div>
 
+<?php if (isset($results) && $hasErrors) : ?>
+    <div>
+        <ul>
+            <?php foreach ($errors as $error) : ?>
+                <li><?= $error ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+
 <!-- Output -->
-<?php if (isset($results)): ?>
+<?php if (isset($results) && !$hasErrors) : ?>
     <div class='container'>
         <div class='row output-title'>
             <div class='col text-center'>
@@ -192,7 +203,7 @@ require 'display_logic.php';
         <!-- Displays BMR calculated as per Harris-Benedict equation if the user selected the checkbox and if the value is set in results -->
         <div class='row output-row'>
             <div class='col text-left'>
-                <?php if (isset($calculateBmrHarris) && $calculateBmrHarris == 'yes'): ?>
+                <?php if (isset($selectedBmrHarris) && $selectedBmrHarris == 'yes'): ?>
                     <span>BMR (Harris-Benedict equation): </span><span><strong><?= $bmrHarris ?></strong></span>
                     <span> calories/day</span>
                 <?php endif; ?>
@@ -201,7 +212,7 @@ require 'display_logic.php';
 
         <!-- Displays a table if the user selected the checkbox to compare and if the value array is set in results -->
         <div class='row justify-content-left table-row'>
-            <?php if (isset($compareCaloriesBurned) && $compareCaloriesBurned == 'yes'): ?>
+            <?php if (isset($selectedCompareCalories) && $selectedCompareCalories == 'yes'): ?>
                 <table class="table table-bordered">
                     <caption class='table-caption'>Calories burned based on different activity levels</caption>
                     <thead>
