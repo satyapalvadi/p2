@@ -161,12 +161,17 @@ require 'display_logic.php';
 </div>
 
 <?php if (isset($results) && $hasErrors) : ?>
-    <div>
-        <ul>
-            <?php foreach ($errors as $error) : ?>
-                <li><?= $error ?></li>
-            <?php endforeach; ?>
-        </ul>
+    <div class='container alert alert-danger'>
+        <div class='row'>
+            <h4>Errors</h4>
+        </div>
+        <div class='row'>
+            <ul>
+                <?php foreach ($errors as $error) : ?>
+                    <li><strong><?= $error ?></strong></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
 <?php endif; ?>
 
