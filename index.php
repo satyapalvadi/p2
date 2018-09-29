@@ -160,6 +160,7 @@ require 'display_logic.php';
     </form>
 </div>
 
+<!-- Display if there are errors during validation -->
 <?php if (isset($results) && $hasErrors) : ?>
     <div class='container alert alert-danger'>
         <div class='row'>

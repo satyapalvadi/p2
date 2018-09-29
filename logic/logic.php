@@ -31,13 +31,11 @@ $errors = $form->validate(
     ]
 );
 
-echo dump($errors);
-
 # Height and weight converters
 $height = $heightRadio == 'inches' ? convertToCms($heightValue) : $heightValue;
 $weight = $weightRadio == 'lbs' ? convertToKgs($weightValue) : $weightValue;
 
-# Lets start populating the session super variable with what we know - inputs & form validation errors.
+# Lets start populating the session super variable with what we know so far - inputs & form validation errors.
 $_SESSION['results'] = [
     'errors' => $errors,
     'hasErrors' => $form->hasErrors,
@@ -52,8 +50,7 @@ $_SESSION['results'] = [
     'selectedCompareCalories' => $compareCaloriesBurned
 ];
 
-echo dump($_SESSION);
-
+# Let's process the form input if there are no errors during validation
 if (!$form->hasErrors) {
     # instantiate the Person class
     $person = new Person($age, $height, $weight, $gender, $activity);
@@ -79,11 +76,8 @@ if (!$form->hasErrors) {
     $_SESSION['results']['caloriesBurnedMiffin'] = $caloriesBurnedMiffin;
     $_SESSION['results']['bmrHarris'] = $bmrHarris;
     $_SESSION['results']['caloriesForActivitiesMiffin'] = $caloriesForActivitiesMiffin;
-
-    echo dump($_SESSION);
-    // die();
 }
+
 # Redirect the user to index.php
 header('Location: ../index.php');
-
 
