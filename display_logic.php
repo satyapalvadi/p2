@@ -18,7 +18,7 @@ if (isset($_SESSION['results'])) {
     $selectedCompareCalories = $results['selectedCompareCalories'];
     $selectedBmrHarris = $results['selectedBmrHarris'];
 
-    if(!$hasErrors) {
+    if (!$hasErrors) {
         $bmrMiffin = $results['bmrMiffin'];
         $caloriesBurnedMiffin = $results['caloriesBurnedMiffin'];
         if ($selectedBmrHarris == 'yes') {

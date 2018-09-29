@@ -26,23 +26,28 @@ class Person
         $this->activityMultipliers = json_decode($activityMultipliersJson, true);
     }
 
-    public function getAge(){
+    public function getAge()
+    {
         return $this->age;
     }
 
-    public function getGender(){
+    public function getGender()
+    {
         return $this->gender;
     }
 
-    public function getActivity(){
+    public function getActivity()
+    {
         return $this->activity;
     }
 
-    public function getWeight(){
+    public function getWeight()
+    {
         return $this->weight;
     }
 
-    public function getHeight(){
+    public function getHeight()
+    {
         return $this->height;
     }
 
@@ -70,13 +75,14 @@ class Person
         return round($this->calculateBMRMiffin() * $this->activityMultipliers[$this->activity], 0, PHP_ROUND_HALF_UP);
     }
 
-    public function compareCaloriesBurned(){
+    public function compareCaloriesBurned()
+    {
         foreach ($this->activityMultipliers as $activityKey => $activityMultiplier) {
             $caloriesForActivitiesMiffin[$activityKey] = round(($this->activityMultipliers[$activityKey] * $this->calculateBMRMiffin()), 0, PHP_ROUND_HALF_UP);
         }
+
         return $caloriesForActivitiesMiffin;
     }
-
 
 }
 

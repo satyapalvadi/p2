@@ -26,10 +26,8 @@ $compareCaloriesBurned = $form->has('compareCalories') ? $form->get('compareCalo
 # Validation methods
 $errors = $form->validate(
     ['age' => 'required|digit',
-    'heightValue' => 'required|digit',
-    'weightValue' => 'required|digit'
-        //'weight' => 'required|digit',
-        //'height' => 'required|digit'
+        'heightValue' => 'required|digit',
+        'weightValue' => 'required|digit'
     ]
 );
 
@@ -83,7 +81,7 @@ if (!$form->hasErrors) {
     $_SESSION['results']['caloriesForActivitiesMiffin'] = $caloriesForActivitiesMiffin;
 
     echo dump($_SESSION);
-   // die();
+    // die();
 }
 # Redirect the user to index.php
 header('Location: ../index.php');
