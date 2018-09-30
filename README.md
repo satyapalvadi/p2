@@ -3,8 +3,9 @@
 + Production URL: http://p2.satyap.me
 
 ## Outside resources
-Formula used in this project are referred from [here](http://www.bmrcalculator.org/) and [here](https://en.wikipedia.org/wiki/Basal_metabolic_rate)
-Bootstrap help from [here](http://getbootstrap.com/) and [here]{https://www.w3schools.com/}
++ Formula used in this project are referred from [here](http://www.bmrcalculator.org/) and [here](https://en.wikipedia.org/wiki/Basal_metabolic_rate)
++ Bootstrap and css help from [here](http://getbootstrap.com/) and [here](https://www.w3schools.com/booTsTrap/default.asp)
++ Flexbox help from [here](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
 
 ## Unique inputs
