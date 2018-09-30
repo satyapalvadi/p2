@@ -20,4 +20,4 @@
 + Form.php
 
 ## Code style divergences
-None
++ Some PHP and HTML code lines extend beyond 80 character limit (violation of a PSR-2 style guide)
