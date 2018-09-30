@@ -19,6 +19,13 @@ require 'display_logic.php';
     <div class='col text-center'>
         <h1>Calories Burned Estimator</h1>
     </div>
+    <div class='row'>
+        <div class='col-sm-1'></div>
+        <div class='col-sm-10 text-center text-secondary'>
+            <p>This estimator calculates Basal metabolic rate (BMR), a metric which indicates the amount of calories expended when the body is at rest. Based on the calculated BMR and the activity level, it further estimates the calories burned every day.</p>
+        </div>
+        <div class='col-sm-1'></div>
+    </div>
 
     <form action='logic/logic.php' method='GET'>
         <!-- Age text box -->
@@ -151,7 +158,7 @@ require 'display_logic.php';
                        value='yes' <?php if (isset($selectedCompareCalories) && $selectedCompareCalories == 'yes'): ?> checked <?php endif; ?>>
             </div>
             <div class='col-sm-7 text-left'>
-                <span>Show how different levels of activity impact calories burned</span>
+                <span>Show how different activity levels impact the calories burned every day</span>
             </div>
         </div>
         <div class='col text-center'>
@@ -190,8 +197,8 @@ require 'display_logic.php';
         <div class='row output-row'>
             <div class='col text-left'>
                 <?php if (isset($bmrMiffin)): ?>
-                <span>Basal Metabolic Rate (BMR): </span>
-                <span><strong><?= $bmrMiffin ?></strong><span> <span> calories/day</span>
+                <span>BMR (MD Mifflin St Jeor equation): </span>
+                <span><strong><u><?= $bmrMiffin ?></u></strong><span> <span> calories/day</span>
                         <?php endif; ?>
             </div>
         </div>
@@ -201,7 +208,7 @@ require 'display_logic.php';
             <div class='col text-left'>
                 <?php if (isset($caloriesBurnedMiffin)): ?>
                     <span>Calories burned based on your activity level: </span>
-                    <span><strong><?= $caloriesBurnedMiffin ?></strong></span><span> calories/day</span>
+                    <span><strong><u><?= $caloriesBurnedMiffin ?></u></strong></span><span> calories/day</span>
                 <?php endif; ?>
             </div>
         </div>
@@ -210,7 +217,7 @@ require 'display_logic.php';
         <div class='row output-row'>
             <div class='col text-left'>
                 <?php if (isset($selectedBmrHarris) && $selectedBmrHarris == 'yes'): ?>
-                    <span>BMR (Harris-Benedict equation): </span><span><strong><?= $bmrHarris ?></strong></span>
+                    <span>BMR (Harris-Benedict equation): </span><span><strong><u><?= $bmrHarris ?></u></strong></span>
                     <span> calories/day</span>
                 <?php endif; ?>
             </div>
@@ -220,7 +227,7 @@ require 'display_logic.php';
         <div class='row justify-content-left table-row'>
             <?php if (isset($selectedCompareCalories) && $selectedCompareCalories == 'yes'): ?>
                 <table class="table table-bordered">
-                    <caption class='table-caption'>Calories burned based on different activity levels</caption>
+                    <caption class='table-caption'>Table: Calories burned based on BMR (Mifflin St Jeor equation) and different activity levels.</caption>
                     <thead>
                     <tr>
                         <th scope='col'

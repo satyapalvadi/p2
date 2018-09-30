@@ -3,23 +3,20 @@
 + Production URL: http://p2.satyap.me
 
 ## Outside resources
-Formula used in this project are referred from here('http://www.bmrcalculator.org/')
-Bootstrap
+Formula used in this project are referred from [here](http://www.bmrcalculator.org/) and [here](https://en.wikipedia.org/wiki/Basal_metabolic_rate)
+Bootstrap help from [here](http://getbootstrap.com/) and [here]{https://www.w3schools.com/}
 
 
-## 3 Unique inputs
-+ Text boxes to indicate age, weight, height
-+ Dropdown to indicate activity levels
-+ Radio buttons to indicate gender, weight in inches or cms, height in kgs or lbs.
-+ Checkboxes to indicate if BMR is calculated using a 2nd equation 
-
+## Unique inputs
++ Text boxes to input age, weight, height.
++ Drop down to input activity levels.
++ Radio button groups to input gender, weight in inches or cms, height in kgs or lbs.
++ Checkbox to indicate if BMR to be calculated using Harris-Benedict equation. 
++ Checkbox to indicate if different levels of activities to be compared
 
 ## Class
-*List the name of the class you're using, e.g. `Form.php`, `Password.php`, etc.*
++ Person.php
++ Form.php
 
 ## Code style divergences
 None
-
-## Notes for instructor
-*any notes for me to refer to while grading; if none, omit this section*
-

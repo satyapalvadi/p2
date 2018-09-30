@@ -26,8 +26,8 @@ $compareCaloriesBurned = $form->has('compareCalories') ? $form->get('compareCalo
 # Validation methods
 $errors = $form->validate(
     ['age' => 'required|digit',
-        'heightValue' => 'required|digit',
-        'weightValue' => 'required|digit'
+        'heightValue' => 'required|numeric|min:0',
+        'weightValue' => 'required|numeric|min:0'
     ]
 );
 
