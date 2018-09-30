@@ -123,7 +123,7 @@ require 'display_logic.php';
         <!-- Drop down to select activity levels -->
         <div class='form-group row align-middle'>
             <div class='col-sm-5 text-right no-right-gutter'>
-                <span><strong>Activity Level</strong></span>
+                <span><strong>Activity level</strong></span>
             </div>
             <div class='col-sm-7'>
                 <select name='activity'>
@@ -189,7 +189,7 @@ require 'display_logic.php';
     <div class='container'>
         <div class='row output-title'>
             <div class='col text-center'>
-                <h2>Your Results</h2>
+                <h2>Results</h2>
             </div>
         </div>
 
@@ -232,7 +232,7 @@ require 'display_logic.php';
                     <tr>
                         <th scope='col'
                             class='text-center align-middle bg-light'
-                            style='width:20%;'>Activity levels
+                            style='width:20%;'>Activity level
                         </th>
                         <?php foreach ($caloriesForActivitiesMiffin as $key => $caloriesForActivityMiffin): ?>
                             <th scope='col' style='width:16%;'
